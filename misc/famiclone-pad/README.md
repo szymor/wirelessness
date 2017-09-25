@@ -1,1 +1,1 @@
-Time diagrams of gamepad interface pins in Saleae-Logic format.
+Time diagrams measured on interface pins of a random Chinese gamepad in Saleae-Logic format.
