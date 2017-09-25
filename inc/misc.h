@@ -32,50 +32,37 @@
     typedef char _impl_PASTE(assertion_failed_##file##_,line)[2*!!(predicate)-1];
 
 /* Button pins */
-#define PORT_B_LEFT			C
-#define PIN_B_LEFT			0
-#define PORT_B_RIGHT		C
-#define PIN_B_RIGHT			1
-#define PORT_B_UP			C
-#define PIN_B_UP			2
-#define PORT_B_DOWN			C
-#define PIN_B_DOWN			3
-#define PORT_B_SELECT		C
-#define PIN_B_SELECT		4
-#define PORT_B_START		C
-#define PIN_B_START			5
-#define PORT_B_A			D
-#define PIN_B_A				0
-#define PORT_B_B			D
-#define PIN_B_B				1
-#define PORT_B_TURBO_A		D
-#define PIN_B_TURBO_A		6
-#define PORT_B_TURBO_B		D
-#define PIN_B_TURBO_B		7
+#define PORT_B_ACTION		D
+#define PIN_B_ACTION		6
+#define PORT_B_NEXT			D
+#define PIN_B_NEXT			7
 
 /* Shift output pins
  * LATCH - INT0
- * CLK - INT1
  */
 #define PORT_LATCH			D
 #define PIN_LATCH			2
-#define PORT_DATA			D
+#define PORT_DATA			B
 #define PIN_DATA			4
-#define PORT_CLK			D
-#define PIN_CLK				3
+/*
+#define PORT_CLK			B
+#define PIN_CLK				5
+*/
+#define PORT_FORCE_SS		B
+#define PIN_FORCE_SS		1
 
 /* NRF24L01 pins */
-#define PORT_IRQ			B
+#define PORT_IRQ			C
 #define PIN_IRQ				0
-#define PORT_CE				B
-#define PIN_CE				1
-#define PORT_CSN			B
-#define PIN_CSN				2
-#define PORT_MOSI			B
-#define PIN_MOSI			3
-#define PORT_MISO			B
-#define PIN_MISO			4
-#define PORT_SCK			B
-#define PIN_SCK				5
+#define PORT_CE				C
+#define PIN_CE				5
+#define PORT_CSN			C
+#define PIN_CSN				4
+#define PORT_MOSI			C
+#define PIN_MOSI			2
+#define PORT_MISO			C
+#define PIN_MISO			1
+#define PORT_SCK			C
+#define PIN_SCK				3
 
 #endif

@@ -7,29 +7,17 @@
 #include <misc.h>
 #include <gpio.h>
 
-/* IMPORTANT - needed for proper arithmetic right shift */
-static int16_t shift_data = 0xffff;
-static int16_t shift_temp;
+/* test value */
+static uint8_t shift_data = 0x55;
 static void shift_init(void);
 
 int main(int argc, char *argv[])
 {
 	shift_init();
+	sei();
 	
-	gpio_cfg_inp(B_LEFT);
-	gpio_cfg_inp(B_RIGHT);
-	gpio_cfg_inp(B_UP);
-	gpio_cfg_inp(B_DOWN);
-	gpio_cfg_inp(B_SELECT);
-	gpio_cfg_inp(B_START);
-	gpio_cfg_inp(B_A);
-	gpio_cfg_inp(B_B);
-	gpio_cfg_inp(B_TURBO_A);
-	gpio_cfg_inp(B_TURBO_B);
-	
-	gpio_cfg_inp(IRQ);
-	gpio_cfg_out_low(CE);
-	gpio_cfg_out(CSN);
+	gpio_cfg_inp(B_ACTION);
+	gpio_cfg_inp(B_NEXT);
 	
 	while (1)
 	{
@@ -38,52 +26,33 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-// LATCH
 ISR(INT0_vect)
 {
-	if (gpio_get(LATCH))
-	{
-		shift_temp = shift_data;
-		if (shift_temp & 1)
-		{
-			gpio_set(DATA);
-		}
-		else
-		{
-			gpio_clr(DATA);
-		}
-		shift_temp >>= 1;
-	}
-	else
-	{
-		// nothing
-	}
+	/*
+	 * load data and enable data shifting by pulling down SS
+	 * pull it up first in case of previous transfer ended prematurely
+	 */
+	gpio_set(FORCE_SS);
+	SPDR = shift_data;
+	gpio_clr(FORCE_SS);
 }
 
-// CLK
-ISR(INT1_vect)
+ISR(SPI_STC_vect)
 {
-	if (gpio_get(CLK))
-	{
-		if (shift_temp & 1)
-		{
-			gpio_set(DATA);
-		}
-		else
-		{
-			gpio_clr(DATA);
-		}
-		shift_temp >>= 1;
-	}
-	else
-	{
-		// nothing
-	}
+	/* restore SS to high */
+	gpio_set(FORCE_SS);
 }
 
 static void shift_init(void)
 {
 	gpio_cfg_inz(LATCH);
+	gpio_cfg_out(FORCE_SS);
+	
+	/* INT0 - rising edge */
+	MCUCR = _BV(ISC01) | _BV(ISC00);
+	GICR = _BV(INT0);
+	
+	/* SPI - slave, mode 2, interrupt enabled, MSB first */
 	gpio_cfg_out(DATA);
-	gpio_cfg_inz(CLK);
+	SPCR = _BV(SPE) | _BV(CPOL) | _BV(SPIE);
 }
