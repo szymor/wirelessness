@@ -1,6 +1,6 @@
 .PHONY: all flash fuses reset clean
 
-PROJNAME = primus
+PROJNAME = wirelessness
 PARTNAME = atmega8
 F_CPU = 12000000ul
 DEBUG ?= 0
@@ -48,7 +48,7 @@ flash:
 	@avrdude -c usbasp -p $(PARTNAME) -U flash:w:$(OUT_HEX):i
 
 fuses:
-	@avrdude -c usbasp -p $(PARTNAME) -U lfuse:w:0xfd:m -U hfuse:w:0xd9:m -U efuse:w:0xff:m
+	@avrdude -c usbasp -p $(PARTNAME) -U lfuse:w:0xfd:m -U hfuse:w:0xd9:m
 
 reset:
 	@avrdude -c usbasp -p $(PARTNAME)
