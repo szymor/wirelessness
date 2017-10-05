@@ -447,8 +447,6 @@ Wire Wire Line
 Wire Wire Line
 	6500 2700 6650 2700
 Wire Wire Line
-	6500 2800 6650 2800
-Wire Wire Line
 	6500 2900 6650 2900
 Wire Wire Line
 	6500 3000 6650 3000
@@ -590,13 +588,13 @@ Wire Wire Line
 	3900 2000 3900 1900
 Wire Wire Line
 	3900 1500 3900 1400
-Text Label 6650 2500 0    60   ~ 0
+Text Label 6700 3500 0    60   ~ 0
 IRQ
-Text Label 6650 2600 0    60   ~ 0
+Text Label 6650 2500 0    60   ~ 0
 MISO
-Text Label 6650 2700 0    60   ~ 0
+Text Label 6650 2600 0    60   ~ 0
 MOSI
-Text Label 6650 2800 0    60   ~ 0
+Text Label 6650 2700 0    60   ~ 0
 SCK
 Text Label 6650 2900 0    60   ~ 0
 CSN
@@ -605,8 +603,58 @@ CE
 NoConn ~ 6500 1800
 NoConn ~ 6500 2100
 NoConn ~ 4600 1800
-NoConn ~ 6500 3200
 NoConn ~ 6500 3300
-NoConn ~ 6500 3500
 NoConn ~ 6500 3600
+Wire Wire Line
+	6700 3500 6500 3500
+NoConn ~ 6500 2800
+Text Notes 3750 7400 0    60   ~ 0
+The buttons and the LED are left for debugging purpose only.
+$Comp
+L R R1
+U 1 1 59D6359D
+P 3750 6200
+F 0 "R1" V 3830 6200 40  0000 C CNN
+F 1 "1k" V 3757 6201 40  0000 C CNN
+F 2 "" V 3680 6200 30  0000 C CNN
+F 3 "" H 3750 6200 30  0000 C CNN
+	1    3750 6200
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED D1
+U 1 1 59D63660
+P 3750 6750
+F 0 "D1" H 3750 6850 50  0000 C CNN
+F 1 "LED" H 3750 6650 50  0000 C CNN
+F 2 "" H 3750 6750 60  0000 C CNN
+F 3 "" H 3750 6750 60  0000 C CNN
+	1    3750 6750
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR020
+U 1 1 59D636E3
+P 3750 7050
+F 0 "#PWR020" H 3750 7050 30  0001 C CNN
+F 1 "GND" H 3750 6980 30  0001 C CNN
+F 2 "" H 3750 7050 60  0001 C CNN
+F 3 "" H 3750 7050 60  0001 C CNN
+	1    3750 7050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 5950 3750 5900
+Wire Wire Line
+	3750 5900 3950 5900
+Wire Wire Line
+	3750 6450 3750 6550
+Wire Wire Line
+	3750 6950 3750 7050
+Text Label 3950 5900 0    60   ~ 0
+LED
+Text Label 6700 3200 0    60   ~ 0
+LED
+Wire Wire Line
+	6500 3200 6700 3200
 $EndSCHEMATC
