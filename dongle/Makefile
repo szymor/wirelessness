@@ -1,6 +1,6 @@
 .PHONY: all flash fuses reset clean
 
-PROJNAME = wirelessness
+PROJNAME = wlndongle
 PARTNAME = atmega8
 F_CPU = 12000000ul
 DEBUG ?= 0
