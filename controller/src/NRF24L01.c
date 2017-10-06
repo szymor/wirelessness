@@ -1,4 +1,5 @@
 #include <NRF24L01.h>
+#include <stdio.h>
 
 static uint8_t spi_rw(uint8_t data)
 {
@@ -16,15 +17,15 @@ static uint8_t spi_rw(uint8_t data)
 		}
 		data <<= 1;
 		
-		_delay_ms(1);
+		//_delay_ms(1);
 		gpio_set(SCK);
-		_delay_ms(1);
+		//_delay_ms(1);
 		
 		data_out <<= 1;
 		data_out |= gpio_get(MISO);
 		
 		gpio_clr(SCK);
-		_delay_ms(1);
+		//_delay_ms(1);
 	}
 	
 	return data_out;
@@ -84,8 +85,11 @@ void nrf_writeRegister( uint8_t reg, uint8_t *buffer, uint8_t length )
 
 	// Send the Write Command / Register address, followed by the value
 	SPI_WRITE( W_REGISTER | reg );
-	for ( int i = 0; i < length; i++ )	
+	for ( int i = 0; i < length; i++ )
+	{
 		SPI_WRITE( buffer[i] );
+		printf("W: buffer[%d]: %x\r\n", i, buffer[i]);
+	}
 
 	NRF_CSN_HIGH(); 
 }
@@ -99,7 +103,10 @@ void nrf_readRegister( uint8_t reg, uint8_t *buffer, uint8_t length )
 
 	SPI_WRITE( R_REGISTER | reg );
 	for ( int i = 0; i < length; i++ )
+	{
 		buffer[i] = SPI_WRITE( NOP );
+		printf("R: buffer[%d]: %x\r\n", i, buffer[i]);
+	}
 
 	NRF_CSN_HIGH(); 
 }
@@ -145,8 +152,11 @@ void nrf_transmit( uint8_t *buffer )
 	// Make sure the nrf isn't already transmitting	
 	uint8_t status;
 	do
-	{	
+	{
+		//NRF_CSN_LOW();
 		status = SPI_WRITE( NOP );
+		//NRF_CSN_HIGH();
+		printf("TRS: %x\r\n", status);
 	} while ( !( status & ( (1 << TX_DS) | (1 << MAX_RT) ) ) );
 
 

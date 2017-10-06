@@ -31,6 +31,18 @@
 #define _impl_CASSERT_LINE(predicate, line, file) \
     typedef char _impl_PASTE(assertion_failed_##file##_,line)[2*!!(predicate)-1];
 
+#define BTN_A		7
+#define BTN_B		6
+#define BTN_SELECT	5
+#define BTN_START	4
+#define BTN_UP		3
+#define BTN_DOWN	2
+#define BTN_LEFT	1
+#define BTN_RIGHT	0
+
+#define PORT_LED			B
+#define PIN_LED				0
+
 /* Button pins */
 #define PORT_B1				C
 #define PIN_B1				0
@@ -44,15 +56,15 @@
  */
 #define PORT_IRQ			D
 #define PIN_IRQ				3
-#define PORT_CE				C
-#define PIN_CE				5
-#define PORT_CSN			C
+#define PORT_CE				A
+#define PIN_CE				0
+#define PORT_CSN			A
 #define PIN_CSN				4
-#define PORT_MOSI			C
-#define PIN_MOSI			1
-#define PORT_MISO			C
-#define PIN_MISO			0
-#define PORT_SCK			C
-#define PIN_SCK				2
+#define PORT_MOSI			A
+#define PIN_MOSI			3
+#define PORT_MISO			A
+#define PIN_MISO			2
+#define PORT_SCK			A
+#define PIN_SCK				1
 
 #endif

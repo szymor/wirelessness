@@ -13,8 +13,6 @@ static uint8_t spi_rw(uint8_t data);
 #include "NRF24L01.c"
 static void spi_init(void);
 
-#define FRAME_SIZE	2
-
 /*
  * shift order:
  * A B Select Start Up Down Left Right
@@ -44,6 +42,7 @@ int main(int argc, char *argv[])
 	uint8_t addressRX[5] = { 'd', 'n', 'g', 'l', '1' };
 	nrf_setAddressRX(addressRX);
 	nrf_setAddressTX(addressTX);
+	nrf_powerUpRX();
 	_delay_ms(10);
 	
 	while (1)
@@ -84,14 +83,15 @@ ISR(INT0_vect)
 ISR(INT1_vect)
 {
 	static uint8_t status;
-	static uint8_t buff[FRAME_SIZE];
+	static uint8_t buff[NRF_PAYLOAD_SIZE];
+	
+	//gpio_clr(LED);
 	status = nrf_getStatus();
 	
 	if (status & _BV(RX_DR))
 	{
-		nrf_getData(buff, FRAME_SIZE);
+		nrf_getData(buff, NRF_PAYLOAD_SIZE);
 		shift_data = buff[0];
-		gpio_toggle(LED);
 	}
 }
 
@@ -131,15 +131,15 @@ static uint8_t spi_rw(uint8_t data)
 		}
 		data <<= 1;
 		
-		_delay_ms(1);
+		//_delay_ms(1);
 		gpio_set(SCK);
-		_delay_ms(1);
+		//_delay_ms(1);
 		
 		data_out <<= 1;
 		data_out |= gpio_get(MISO);
 		
 		gpio_clr(SCK);
-		_delay_ms(1);
+		//_delay_ms(1);
 	}
 	
 	return data_out;
@@ -155,6 +155,6 @@ static void spi_init(void)
 static void irq_init(void)
 {
 	/* INT1 - falling edge */
-	MCUCR |= _BV(ISC11);
+	MCUCR |= 0;//_BV(ISC11);
 	GICR |= _BV(INT1);
 }

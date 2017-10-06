@@ -11,7 +11,7 @@ void nrf_init()
 	//NRF_DDR |= (1 << NRF_CSN) | (1 << NRF_CE);
 
 	// Enable pull-up resistor on interrupt pin
-	gpio_cfg_inp(IRQ);
+	gpio_cfg_inz(IRQ);
 	//NRF_PORT |= (1 << NRF_IRQ); 
 
 	// Start with NRF idle
