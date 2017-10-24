@@ -1,6 +1,8 @@
 #ifndef _H_GPIO
 #define _H_GPIO
 
+#include <avr/io.h>
+
 #define GPIO_CFG_OUT(port, pin) \
 	PORT##port |= (1 << pin); \
 	DDR##port |= (1 << pin)

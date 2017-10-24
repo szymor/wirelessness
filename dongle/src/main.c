@@ -7,11 +7,7 @@
 
 #include <misc.h>
 #include <gpio.h>
-
-static uint8_t spi_rw(uint8_t data);
 #include <NRF24L01.h>
-#include "NRF24L01.c"
-static void spi_init(void);
 
 /*
  * shift order:
@@ -38,10 +34,8 @@ int main(int argc, char *argv[])
 	
 	sei();
 	
-	uint8_t addressTX[5] = { 'c', 't', 'l', 'r', '1' };
-	uint8_t addressRX[5] = { 'd', 'n', 'g', 'l', '1' };
+	uint8_t addressRX[5] = { 'w', 'n', 'l', 'd', '0' };
 	nrf_setAddressRX(addressRX);
-	nrf_setAddressTX(addressTX);
 	nrf_powerUpRX();
 	_delay_ms(10);
 	
@@ -51,16 +45,14 @@ int main(int argc, char *argv[])
 		
 		if (0 == gpio_get(B_ACTION))
 		{
-			// button A
-			shift_data = 0b01111111;
+			shift_data = (uint8_t) ~_BV(BTN_A);
 			_delay_ms(200);
 			shift_data = 0xff;
 		}
 
 		if (0 == gpio_get(B_NEXT))
 		{
-			// start
-			shift_data = 0b11101111;
+			shift_data = (uint8_t) ~_BV(BTN_START);
 			_delay_ms(200);
 			shift_data = 0xff;
 		}
@@ -85,7 +77,6 @@ ISR(INT1_vect)
 	static uint8_t status;
 	static uint8_t buff[NRF_PAYLOAD_SIZE];
 	
-	//gpio_clr(LED);
 	status = nrf_getStatus();
 	
 	if (status & _BV(RX_DR))
@@ -115,46 +106,9 @@ static void shift_init(void)
 	SPCR |= _BV(SPE) | _BV(CPOL) | _BV(SPIE);
 }
 
-static uint8_t spi_rw(uint8_t data)
-{
-	uint8_t data_out = 0xff;
-	
-	for (uint8_t i = 0; i < 8; ++i)
-	{
-		if (data & 0x80)
-		{
-			gpio_set(MOSI);
-		}
-		else
-		{
-			gpio_clr(MOSI);
-		}
-		data <<= 1;
-		
-		//_delay_ms(1);
-		gpio_set(SCK);
-		//_delay_ms(1);
-		
-		data_out <<= 1;
-		data_out |= gpio_get(MISO);
-		
-		gpio_clr(SCK);
-		//_delay_ms(1);
-	}
-	
-	return data_out;
-}
-
-static void spi_init(void)
-{
-	gpio_cfg_out(MOSI);
-	gpio_cfg_inp(MISO);
-	gpio_cfg_out_low(SCK);
-}
-
 static void irq_init(void)
 {
-	/* INT1 - falling edge */
-	MCUCR |= 0;//_BV(ISC11);
+	/* INT1 - low level */
+	MCUCR |= 0;
 	GICR |= _BV(INT1);
 }

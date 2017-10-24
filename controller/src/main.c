@@ -28,9 +28,7 @@ int main(void)
 	
 	sei();
 	
-	uint8_t addressRX[5] = { 'c', 't', 'l', 'r', '1' };
-	uint8_t addressTX[5] = { 'd', 'n', 'g', 'l', '1' };
-	nrf_setAddressRX(addressRX);
+	uint8_t addressTX[5] = { 'w', 'n', 'l', 'd', '0' };
 	nrf_setAddressTX(addressTX);
 	_delay_ms(10);
 	
@@ -38,7 +36,7 @@ int main(void)
 	
 	printf("Hello world!\r\n");
 	
-	uint8_t payload[] = { 't', 'e', 's', 't' };
+	uint8_t payload[4] = { 't', 'e', 's', 't' };
 	
 	payload[0] = 0xff;
 	while (1)
@@ -60,28 +58,10 @@ int main(void)
 
 		nrf_powerUpRX();
 		nrf_powerUpTX();
+		
 		nrf_transmit( payload );
 		
 		_delay_ms(10);
-
-		/* Computer keyboard control stub:
-		switch (fgetc(stdin))
-		{
-			case 'a': payload[0] &= ~_BV(1); break;
-			case 'd': payload[0] &= ~_BV(0); break;
-			case 'w': payload[0] &= ~_BV(3); break;
-			case 's': payload[0] &= ~_BV(2); break;
-			case '\n': payload[0] &= ~_BV(4); break;
-			case 'p': payload[0] &= ~_BV(5); break;
-			case 'n': payload[0] &= ~_BV(7); break;
-			case 'm': payload[0] &= ~_BV(6); break;
-			case ' ': payload[0] = 0xff; break;
-		}
-
-		nrf_powerUpRX();
-		nrf_powerUpTX();
-		nrf_transmit( payload );
-		*/
 	}
 	
 	return 0;
@@ -96,6 +76,9 @@ ISR(INT1_vect)
 	if (status & _BV(RX_DR))
 	{
 		nrf_getData(buff, NRF_PAYLOAD_SIZE);
+		/* process received data if needed
+		 * currently unused, should never happen
+		*/
 	}
 }
 

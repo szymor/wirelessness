@@ -603,7 +603,7 @@ Wire Wire Line
 	6700 3500 6500 3500
 NoConn ~ 6500 2800
 Text Notes 3750 7400 0    60   ~ 0
-The buttons and the LED are left for debugging purpose only.
+The buttons and the LED are left for debugging purposes only.
 $Comp
 L R R1
 U 1 1 59D6359D
@@ -658,4 +658,5 @@ Wire Wire Line
 Wire Wire Line
 	9500 3750 9500 3800
 Connection ~ 9500 3800
+NoConn ~ 10200 3200
 $EndSCHEMATC

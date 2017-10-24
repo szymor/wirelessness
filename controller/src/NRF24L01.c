@@ -88,7 +88,7 @@ void nrf_writeRegister( uint8_t reg, uint8_t *buffer, uint8_t length )
 	for ( int i = 0; i < length; i++ )
 	{
 		SPI_WRITE( buffer[i] );
-		printf("W: buffer[%d]: %x\r\n", i, buffer[i]);
+		//printf("W: buffer[%d]: %x\r\n", i, buffer[i]);
 	}
 
 	NRF_CSN_HIGH(); 
@@ -105,7 +105,7 @@ void nrf_readRegister( uint8_t reg, uint8_t *buffer, uint8_t length )
 	for ( int i = 0; i < length; i++ )
 	{
 		buffer[i] = SPI_WRITE( NOP );
-		printf("R: buffer[%d]: %x\r\n", i, buffer[i]);
+		//printf("R: buffer[%d]: %x\r\n", i, buffer[i]);
 	}
 
 	NRF_CSN_HIGH(); 
@@ -156,7 +156,7 @@ void nrf_transmit( uint8_t *buffer )
 		//NRF_CSN_LOW();
 		status = SPI_WRITE( NOP );
 		//NRF_CSN_HIGH();
-		printf("TRS: %x\r\n", status);
+		//printf("TRS: %x\r\n", status);
 	} while ( !( status & ( (1 << TX_DS) | (1 << MAX_RT) ) ) );
 
 
