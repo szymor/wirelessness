@@ -23,7 +23,7 @@ LFLAGS = -mmcu=$(PARTNAME)
 
 SRCDIR = src
 OBJDIR = obj
-OBJ = main.o serial.o NRF24L01.o
+OBJ = main.o serial.o NRF24L01.o spisw.o timer.o
 OBJS = $(addprefix $(OBJDIR)/,$(OBJ))
 
 all: $(OUT_HEX)

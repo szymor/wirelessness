@@ -40,16 +40,27 @@
 #define BTN_LEFT	1
 #define BTN_RIGHT	0
 
-#define PORT_LED			B
-#define PIN_LED				0
-
 /* Button pins */
-#define PORT_B1				C
-#define PIN_B1				0
-#define PORT_B2				C
-#define PIN_B2				1
-#define PORT_B3				C
-#define PIN_B3				2
+#define PORT_B_AUTO_A		A
+#define PIN_B_AUTO_A		7
+#define PORT_B_AUTO_B		A
+#define PIN_B_AUTO_B		6
+#define PORT_B_A			C
+#define PIN_B_A				7
+#define PORT_B_B			C
+#define PIN_B_B				6
+#define PORT_B_SELECT		C
+#define PIN_B_SELECT		5
+#define PORT_B_START		C
+#define PIN_B_START			4
+#define PORT_B_UP			C
+#define PIN_B_UP			3
+#define PORT_B_DOWN			C
+#define PIN_B_DOWN			2
+#define PORT_B_LEFT			C
+#define PIN_B_LEFT			1
+#define PORT_B_RIGHT		C
+#define PIN_B_RIGHT			0
 
 /* NRF24L01 pins
  * IRQ - INT1

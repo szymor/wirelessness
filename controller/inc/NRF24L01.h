@@ -21,6 +21,7 @@
 
 #include <misc.h>
 #include <gpio.h>
+#include <spisw.h>
 
 // ===================================== USER SETTINGS =====================================
 
